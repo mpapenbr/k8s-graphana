@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+
+configMapGenerator:
+  - name: prometheus-config
+    files: 
+    - prometheus.yml.tmpl=config/prometheus.yml.tmpl
+
+secretGenerator:
+  - name: monitor-secrets
+    envs:
+      - .env
+
+resources:
+  - "namespace.yml"
+  - "prometheus.yml"
